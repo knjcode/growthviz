@@ -1,0 +1,6 @@
+work/*
+data/*
+create_video.sh
+create_video.profile
+*.pyc
+shape_predictor_68_face_landmarks.dat

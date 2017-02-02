@@ -1,0 +1,6 @@
+*
+!requirements.txt
+!config/
+!*.py
+!clear.sh
+!docker-entrypoint.sh

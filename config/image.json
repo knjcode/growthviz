@@ -1,0 +1,16 @@
+{ "image": {
+    "width_px": 1200,
+    "height_px": 1920,
+    "max_height_cm": 120
+  },
+  "landscape_example_image": {
+    "width_px": 1920,
+    "height_px": 1200,
+    "max_height_cm": 120
+  },
+  "portrait_example_image": {
+    "width_px": 1200,
+    "height_px": 1920,
+    "max_height_cm": 120
+  }
+}

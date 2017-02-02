@@ -1,0 +1,6 @@
+growthviz:
+  image: knjcode/growthviz
+  container_name: "growthviz"
+  volumes:
+    - "$PWD/work:/app/work"
+    - "$PWD/data:/app/data"
