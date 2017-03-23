@@ -39,8 +39,6 @@ def main(photo_file_dir):
                 continue
 
             if detected > 0:
-                im = cv2.imread(photo_file)
-
                 face = response['responses'][0]['faceAnnotations'][0]
                 print 'rollAngle: %s' % face['rollAngle']
                 print 'panAngle: %s' % face['panAngle']
@@ -80,6 +78,7 @@ def main(photo_file_dir):
                     expansion_rate = 1
                 # 顔の領域を拡大 cloudvisionの場合はpupil_distance分拡大、dlibの場合もpupil_distance分拡大
                 pd_int = int(round(pupil_distance * expansion_rate))
+                im = cv2.imread(photo_file)
                 (im_x, im_y) = im.shape[:2]
                 startx = max(0, fdBoundingPoly[0][0] - pd_int)
                 starty = max(0, fdBoundingPoly[0][1] - pd_int)
