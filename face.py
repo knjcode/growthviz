@@ -42,6 +42,17 @@ def main(photo_file_dir):
                 im = cv2.imread(photo_file)
 
                 face = response['responses'][0]['faceAnnotations'][0]
+                print 'rollAngle: %s' % face['rollAngle']
+                print 'panAngle: %s' % face['panAngle']
+                # if abs(face['panAngle']) > 30:
+                #     continue
+                print 'tiltAngle: %s' % face['tiltAngle']
+                # if abs(face['tiltAngle']) > 30:
+                #     continue
+                print 'detectionConfidence: %s' % face['detectionConfidence']
+                if face['detectionConfidence'] < 0.6:
+                    continue
+
                 landmarks = face['landmarks']
                 for pos in landmarks:
                     x = pos['position']['x']
@@ -54,17 +65,6 @@ def main(photo_file_dir):
                     if pos['type'] == 'RIGHT_EYE_PUPIL':
                         right_eye_pos = (x, y)
                         right_eye_list.append(right_eye_pos)
-
-                print 'rollAngle: %s' % face['rollAngle']
-                print 'panAngle: %s' % face['panAngle']
-                # if abs(face['panAngle']) > 30:
-                #     continue
-                print 'tiltAngle: %s' % face['tiltAngle']
-                # if abs(face['tiltAngle']) > 30:
-                #     continue
-                print 'detectionConfidence: %s' % face['detectionConfidence']
-                if face['detectionConfidence'] < 0.6:
-                    continue
 
                 # 瞳孔間距離の計算
                 pupil_distance = math.sqrt(
