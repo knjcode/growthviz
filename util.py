@@ -16,7 +16,7 @@ from skimage import io
 
 
 def dlib_face_detector_version():
-    return '001'
+    return '002'
 
 
 def src_dir():
@@ -143,7 +143,7 @@ def face_detection(fname, cache):
     return dlib_face_detection(fname, cache)
 
 
-def dlib_face_detction_dict(left_eye, right_eye, face_rect, left_eyes, tiltAngle, panAngle, rollAngle):
+def dlib_face_detction_dict(score, left_eye, right_eye, face_rect, left_eyes, tiltAngle, panAngle, rollAngle):
     return {u'responses':
             [
                 {u'faceAnnotations':
@@ -158,7 +158,7 @@ def dlib_face_detction_dict(left_eye, right_eye, face_rect, left_eyes, tiltAngle
                      u'rollAngle': rollAngle,
                      u'panAngle': panAngle,
                      u'tiltAngle': tiltAngle,
-                     u'detectionConfidence': 0.9,
+                     u'detectionConfidence': score,
                      u'fdBoundingPoly': {
                          u'vertices':
                          [
@@ -264,7 +264,7 @@ def dlib_face_detection(fname, cache):
     else:
         img = io.imread(fname)
         (height_org, width_org) = img.shape[:2]
-        dets = detector(img, 1)
+        dets, scores, _idx = detector.run(img, 1)
         (height_up, width_up) = img.shape[:2]
         (height_scale, width_scale) = (
             height_org / height_up, width_org / width_up)
@@ -272,6 +272,7 @@ def dlib_face_detection(fname, cache):
         (right_eye_x, right_eye_y) = (0, 0)
         if len(dets) > 0:
             d = dets[0]
+            score = scores[0]
             shape = predictor(img, d)
             left_eyes = []
             right_eyes = []
@@ -304,7 +305,7 @@ def dlib_face_detection(fname, cache):
             (tiltAngle, panAngle, rollAngle) = head_pose_estimation(
                 fname, head_pose_estimation_points)
             response = dlib_face_detction_dict(
-                left_eye, right_eye, face_rect, left_eyes, tiltAngle, panAngle, rollAngle)
+                score, left_eye, right_eye, face_rect, left_eyes, tiltAngle, panAngle, rollAngle)
         else:
             response = {u'responses': [{}]}
         # 顔認識結果をログに保存
